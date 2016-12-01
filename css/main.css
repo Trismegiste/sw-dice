@@ -15,7 +15,7 @@ form label {
 
 .validate {
     font-size: 125%;
-    margin: 1em 0 1em;
+    margin: 1em 0 0;
 }
 
 /* source http://www.colourlovers.com/palette/1231651/Fantasia_Hippo */
@@ -35,6 +35,6 @@ form label {
     background: #76D8FF; /* this is a blue */
 }
 
-.result {
+.detail-result {
     font-size: 80%
 }

@@ -21,8 +21,6 @@
                        class="{ model.joker == joker ? 'selected' : false }">
                     <i class="icon-d{joker}"></i>
                 </label>
-                <label><i class="icon-emo-{ emoticon }"></i></label>
-                <label>{ result }</label>
             </div>
         </div>
         <div class="pure-g">
@@ -31,6 +29,14 @@
             </div>
         </div>
         <div class="pure-g result">
+            <div class="pure-u-1-2">
+                <label>{result}</label>
+            </div>
+            <div class="pure-u-1-2">
+                <label><i class="icon-emo-{ emoticon }"></i></label>
+            </div>
+        </div>
+        <div class="pure-g detail-result">
             <div class="pure-u-1-{ detail.length }" each="{oneDie in detail}">
                 <label>{oneDie}</label>
             </div>
@@ -45,6 +51,7 @@
         this.detail = [6,5,24,5,5,8]
         this.result = 24;
         this.emoticon = 'laugh'
+
         var self = this
 
         onChangeNumber(e) {
