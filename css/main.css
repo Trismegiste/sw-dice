@@ -5,10 +5,14 @@ footer.terminal {
 }
 
 form {
-    font-size: 240%;
     margin: 0 0.6em 1em;
 }
 
-.centered {
-    text-align: center;
+form label {
+    font-size: 180%;
+}
+
+.validate {
+    font-size: 140%;
+    margin: 1em 0 1em;
 }

@@ -3,7 +3,8 @@
         <div class="pure-g">
             <div class="pure-u-1-3">
                 <label each="{ number in [1,2,3,4,5] }">
-                    <input name="number" type="radio" value="{number}"/>{number}
+                    <input name="number" type="radio" value="{number}"/>
+                    {number}
                 </label>
             </div>
             <div class="pure-u-1-3">
@@ -21,8 +22,13 @@
             </div>
         </div>
         <div class="pure-g">
-            <div class="pure-u-1-1 centered">
-                <button class="pure-button pure-button-primary">Roll</button>
+            <div class="pure-u-1-1 validate">
+                <button class="pure-button pure-button-primary pure-input-1">Roll</button>
+            </div>
+        </div>
+        <div class="pure-g">
+            <div class="pure-u-1-1">
+                Result
             </div>
         </div>
     </form>
