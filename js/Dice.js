@@ -1,6 +1,6 @@
 // dice roler library
 
-var dice = {
+var Dice = {
     roll: function (side) {
         return  Math.ceil(Math.random() * side);
     },
