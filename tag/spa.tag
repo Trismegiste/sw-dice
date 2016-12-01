@@ -45,7 +45,7 @@
     <script>
         this.model = {
             number: 1,
-            face: 4,
+            face: 8,
             joker: 6
         }
         this.detail = []
