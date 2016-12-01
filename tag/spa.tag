@@ -33,7 +33,7 @@
                 <label>{result}</label>
             </div>
             <div class="pure-u-1-2">
-                <label><i class="icon-emo-{ emoticon }"></i></label>
+                <label if="{emoticon}"><i class="icon-emo-{ emoticon }"></i></label>
             </div>
         </div>
         <div class="pure-g detail-result">
@@ -48,9 +48,9 @@
             face: 4,
             joker: 6
         }
-        this.detail = [6,5,24,5,5,8]
-        this.result = 24;
-        this.emoticon = 'laugh'
+        this.detail = []
+        this.result = '';
+        this.emoticon = false
 
         var self = this
 
@@ -67,7 +67,42 @@
         }
 
         onRoll() {
-
+            self.detail = []
+            self.result = 0
+            var aceCount = 0
+            var fumbleCount = 0
+            // standard dices
+            for(var k = 0; k < self.model.number; k++) {
+                var roll = Dice.unlimitRoll(self.model.face)
+                self.detail.push(roll)
+                if (roll === 1) {
+                    fumbleCount++
+                }
+                if (roll > self.model.face) {
+                    aceCount++
+                }
+            }
+            // joker die
+            if (self.model.joker !== 'x') {
+                var roll = Dice.unlimitRoll(self.model.joker)
+                self.detail.push(roll)
+                if (roll === 1) {
+                    fumbleCount++
+                }
+                if (roll > self.model.joker) {
+                    aceCount++
+                }
+            }
+            // result
+            self.result = Math.max.apply(null, self.detail)
+            // emoticon
+            if (aceCount === self.detail.length) {
+                self.emoticon = 'laugh'
+            } else if (fumbleCount === self.detail.length) {
+                self.emoticon = 'cry'
+            } else {
+                self.emoticon = false
+            }
         }
 
     </script>
