@@ -1,23 +1,25 @@
 <spa>
     <form class="pure-form">
         <div class="pure-g">
-            <div class="pure-u-1-3">
-                <label each="{ number in [1,2,3,4,5] }">
-                    <input name="number" type="radio" value="{number}"/>
+            <div class="pure-u-1-3 number-column">
+                <label each="{ number in [1,2,3,4,5] }"
+                       onclick="{ parent.onChangeNumber }"
+                       class="{ model.number == number ? 'selected' : false }">
                     {number}
                 </label>
             </div>
-            <div class="pure-u-1-3">
-                <label each="{ face in [4,6,8,10,12] }">
-                    <input name="dice" type="radio" value="{face}"/><i class="icon-d{face}"></i>
+            <div class="pure-u-1-3 face-column">
+                <label each="{ face in [4,6,8,10,12] }"
+                       onclick="{ parent.onChangeFace }"
+                       class="{ model.face == face ? 'selected' : false }">
+                    <i class="icon-d{face}"></i>
                 </label>
             </div>
-            <div class="pure-u-1-3">
-                <label>
-                    <input name="joker" type="radio" value="{face}"/> X
-                </label>
-                <label each="{ face in [6,10] }">
-                    <input name="joker" type="radio" value="{face}"/><i class="icon-d{face}"></i>
+            <div class="pure-u-1-3 joker-column">
+                <label each="{ joker in ['x', 6, 10] }"
+                       onclick="{ parent.onChangeJoker }"
+                       class="{ model.joker == joker ? 'selected' : false }">
+                    <i class="icon-d{joker}"></i>
                 </label>
             </div>
         </div>
@@ -33,6 +35,25 @@
         </div>
     </form>
     <script>
+        this.model = {
+            number: 1,
+            face: 4,
+            joker: 6
+        }
+        var self = this
+
+        onChangeNumber(e) {
+            self.model.number = e.item.number
+        }
+
+        onChangeFace(e) {
+            self.model.face = e.item.face
+        }
+
+        onChangeJoker(e) {
+            self.model.joker = e.item.joker
+        }
+
 
     </script>
 </spa>
