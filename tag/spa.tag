@@ -25,7 +25,7 @@
         </div>
         <div class="pure-g">
             <div class="pure-u-1-1 validate">
-                <button class="pure-button pure-button-primary pure-input-1">Roll</button>
+                <button class="pure-button button-primary pure-input-1">Roll</button>
             </div>
         </div>
         <div class="pure-g">

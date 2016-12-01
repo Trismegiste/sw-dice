@@ -15,10 +15,23 @@ form label {
 }
 
 .validate {
-    font-size: 140%;
+    font-size: 125%;
     margin: 1em 0 1em;
 }
 
-.selected {
-    background-color: gray;
+/* source http://www.colourlovers.com/palette/1231651/Fantasia_Hippo */
+.number-column .selected {
+    background: #20FC90; /* this is a green */
+}
+
+.joker-column .selected {
+    background: #FC70C2; /* this is a red */
+}
+
+.face-column .selected {
+    background: #FFD637; /* this is an orange */
+}
+
+.button-primary {
+    background: #76D8FF; /* this is a blue */
 }
