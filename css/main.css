@@ -8,9 +8,11 @@ form {
     margin: 0 0.6em 1em;
 }
 
-form label {
+.pure-form label {
     font-size: 180%;
     text-align: center;
+    margin-bottom: 0.3em;
+    display: block;
 }
 
 .validate {
@@ -36,5 +38,5 @@ form label {
 }
 
 .detail-result {
-    font-size: 80%
+    font-size: 70%
 }
