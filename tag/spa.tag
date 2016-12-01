@@ -21,6 +21,8 @@
                        class="{ model.joker == joker ? 'selected' : false }">
                     <i class="icon-d{joker}"></i>
                 </label>
+                <label><i class="icon-emo-{ emoticon }"></i></label>
+                <label>{ result }</label>
             </div>
         </div>
         <div class="pure-g">
@@ -29,7 +31,7 @@
             </div>
         </div>
         <div class="pure-g result">
-            <div class="pure-u-1-{ result.length }" each="{oneDie in result}">
+            <div class="pure-u-1-{ detail.length }" each="{oneDie in detail}">
                 <label>{oneDie}</label>
             </div>
         </div>
@@ -40,7 +42,9 @@
             face: 4,
             joker: 6
         }
-        this.result = [6,5,24,5,5,8]
+        this.detail = [6,5,24,5,5,8]
+        this.result = 24;
+        this.emoticon = 'laugh'
         var self = this
 
         onChangeNumber(e) {
@@ -56,7 +60,7 @@
         }
 
         onRoll() {
-            var nb
+
         }
 
     </script>
