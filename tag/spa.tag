@@ -70,25 +70,18 @@
             self.detail = []
             self.result = 0
             var aceCount = 0
-            var fumbleCount = 0
             // standard dices
             for(var k = 0; k < self.model.number; k++) {
-                var roll = Dice.unlimitRoll(self.model.face)
+                var roll = dicePoolService.unlimitRoll(self.model.face)
                 self.detail.push(roll)
-                if (roll === 1) {
-                    fumbleCount++
-                }
                 if (roll > self.model.face) {
                     aceCount++
                 }
             }
             // joker die
             if (self.model.joker !== 'x') {
-                var roll = Dice.unlimitRoll(self.model.joker)
+                var roll = dicePoolService.unlimitRoll(self.model.joker)
                 self.detail.push(roll)
-                if (roll === 1) {
-                    fumbleCount++
-                }
                 if (roll > self.model.joker) {
                     aceCount++
                 }
@@ -98,7 +91,7 @@
             // emoticon
             if (aceCount === self.detail.length) {
                 self.emoticon = 'laugh'
-            } else if (fumbleCount === self.detail.length) {
+            } else if (self.result === 1) {
                 self.emoticon = 'cry'
             } else {
                 self.emoticon = false

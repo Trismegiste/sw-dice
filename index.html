@@ -26,10 +26,11 @@
     <script src="./tag/spa.tag" type="riot/tag"></script>
     <script src="./tag/my-footer.tag" type="riot/tag"></script>
 
-    <script src="./js/Dice.js"></script>
+    <script src="./js/DicePool.js"></script>
     <script>
-        riot.route.start(true);
-        riot.mount('*');
+        var dicePoolService = new DicePool()
+        riot.route.start(true)
+        riot.mount('*')
         riot.route('start')
     </script>
 </body>
