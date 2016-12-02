@@ -37,8 +37,8 @@
             </div>
         </div>
         <div class="pure-g detail-result">
-            <div class="pure-u-1-{ detail.length }" each="{detail}">
-                <label>{value}</label>
+            <div class="pure-u-1-{ detail.length }" each="{rolled in detail}">
+                <label>{rolled}</label>
             </div>
         </div>
     </form>
@@ -73,24 +73,24 @@
             // preparing dice pool : standard dices
             var pool = []
             for(var k = 0; k < self.model.number; k++) {
-                pool.push({side: self.model.face})
+                pool.push(self.model.face)
             }
             // joker die
             if (self.model.joker !== 'x') {
-                pool.push({side: self.model.joker})
+                pool.push(self.model.joker)
             }
             // make roll
-            dicePoolService.rollPool(pool).then(function(pool){
-                for(var idx in pool) {
-                    var p = pool[idx]
-                    if (p.ace) {
+            dicePoolService.rollPool(pool).then(function(rolled){
+                for(var idx in rolled) {
+                    var p = rolled[idx]
+                    if (p > pool[idx]) {
                         aceCount++
                     }
-                    if (p.value > self.result) {
-                        self.result = p.value
+                    if (p > self.result) {
+                        self.result = p
                     }
                 }
-                self.detail = pool
+                self.detail = rolled
                 // emoticon
                 if (aceCount === self.detail.length) {
                     self.emoticon = 'laugh'
