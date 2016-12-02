@@ -23,22 +23,25 @@
                 </label>
             </div>
         </div>
-        <div class="pure-g">
-            <div class="pure-u-1-1 validate">
-                <button class="pure-button button-primary pure-input-1">Roll</button>
+        <div class="pure-g {hidden: !waiting}">
+            <div class="pure-u-1-1 spinner-waiting">
+                <label><i class="icon-spinner animate-spin"></i></label>
             </div>
         </div>
-        <div class="pure-g result">
-            <div class="pure-u-1-2">
-                <label>{result}</label>
+        <div class="{hidden: waiting}">
+            <div class="pure-g">
+                <div class="pure-u-1-1 validate">
+                    <button class="pure-button button-primary pure-input-1">Roll</button>
+                </div>
+                <div class="pure-u-1-1">
+                    <label if="{result > 1}">{result}</label>
+                    <label if="{result == 1}"><i class="icon-emo-cry"></i></label>
+                </div>
             </div>
-            <div class="pure-u-1-2">
-                <label if="{emoticon}"><i class="icon-emo-{ emoticon }"></i></label>
-            </div>
-        </div>
-        <div class="pure-g detail-result">
-            <div class="pure-u-1-{ detail.length }" each="{oneDie in detail}">
-                <label>{oneDie}</label>
+            <div class="pure-g detail-result">
+                <div class="pure-u-1-{ detail.length }" each="{rolled in detail}">
+                    <label>{rolled}</label>
+                </div>
             </div>
         </div>
     </form>
@@ -50,8 +53,6 @@
         }
         this.detail = []
         this.result = '';
-        this.emoticon = false
-
         var self = this
 
         onChangeNumber(e) {
@@ -67,35 +68,25 @@
         }
 
         onRoll() {
+            self.waiting = true
             self.detail = []
             self.result = 0
-            var aceCount = 0
-            // standard dices
+            // preparing dice pool : standard dices
+            var pool = []
             for(var k = 0; k < self.model.number; k++) {
-                var roll = dicePoolService.unlimitRoll(self.model.face)
-                self.detail.push(roll)
-                if (roll > self.model.face) {
-                    aceCount++
-                }
+                pool.push(self.model.face)
             }
             // joker die
             if (self.model.joker !== 'x') {
-                var roll = dicePoolService.unlimitRoll(self.model.joker)
-                self.detail.push(roll)
-                if (roll > self.model.joker) {
-                    aceCount++
-                }
+                pool.push(self.model.joker)
             }
-            // result
-            self.result = Math.max.apply(null, self.detail)
-            // emoticon
-            if (aceCount === self.detail.length) {
-                self.emoticon = 'laugh'
-            } else if (self.result === 1) {
-                self.emoticon = 'cry'
-            } else {
-                self.emoticon = false
-            }
+            // make roll
+            dicePoolService.rollPool(pool).then(function(rolled){
+                self.result = Math.max.apply(null, rolled)
+                self.detail = rolled
+                self.waiting = false;
+                self.update()
+            })
         }
 
     </script>
