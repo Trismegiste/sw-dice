@@ -40,3 +40,8 @@ form {
 .detail-result {
     font-size: 70%
 }
+
+.spinner-waiting label {
+    font-size: 500%;
+    color: gray;
+}

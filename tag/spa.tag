@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="pure-g {hidden: !waiting}">
-            <div class="pure-u-1-1">
+            <div class="pure-u-1-1 spinner-waiting">
                 <label><i class="icon-spinner animate-spin"></i></label>
             </div>
         </div>
