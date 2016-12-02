@@ -2,7 +2,7 @@
 
 var DicePool = function () {
     this.container = [] // FIFO
-    this.diceCount = 50
+    this.diceCount = 100
 }
 
 DicePool.prototype.rollOne = function (side) {
@@ -17,7 +17,7 @@ DicePool.prototype.rollOne = function (side) {
                     + '&base=10&format=plain&rnd=new').then(function (response) {
                 return response.text()
             }).then(function (content) {
-                console.log("load")
+                //console.log("load")
 
                 var extracted = content.split("\t");
                 for (var k = 0; k < self.diceCount; k++) {
@@ -45,11 +45,11 @@ DicePool.prototype.recursiveRollOne = function (side) {
 
     return new Promise(function (fulfill, reject) {
         self.rollOne(side).then(function (first) {
-            console.log("during recurs " + first)
+            //console.log("during recurs " + first)
             if (first < side) {
                 fulfill(first)
             } else {
-                console.log('reroll')
+                //console.log('reroll')
                 self.recursiveRollOne(side).then(function (reroll) {
                     fulfill(first + reroll)
                 })
