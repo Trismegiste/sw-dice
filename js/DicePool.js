@@ -1,9 +1,8 @@
 // dice roler library
 
 var DicePool = function () {
-    this.random = new Random(Random.engines.mt19937().autoSeed())
     this.container = [] // FIFO
-    this.diceCount = 10
+    this.diceCount = 50
 }
 
 DicePool.prototype.rollOne = function (side) {

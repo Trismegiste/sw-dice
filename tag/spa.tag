@@ -29,11 +29,9 @@
             </div>
         </div>
         <div class="pure-g result">
-            <div class="pure-u-1-2">
-                <label>{result}</label>
-            </div>
-            <div class="pure-u-1-2">
-                <label if="{emoticon}"><i class="icon-emo-{ emoticon }"></i></label>
+            <div class="pure-u-1-1">
+                <label if="{result > 1}">{result}</label>
+                <label if="{result == 1}"><i class="icon-emo-cry"></i></label>
             </div>
         </div>
         <div class="pure-g detail-result">
@@ -50,8 +48,6 @@
         }
         this.detail = []
         this.result = '';
-        this.emoticon = false
-
         var self = this
 
         onChangeNumber(e) {
@@ -69,7 +65,6 @@
         onRoll() {
             self.detail = []
             self.result = 0
-            var aceCount = 0
             // preparing dice pool : standard dices
             var pool = []
             for(var k = 0; k < self.model.number; k++) {
@@ -81,24 +76,8 @@
             }
             // make roll
             dicePoolService.rollPool(pool).then(function(rolled){
-                for(var idx in rolled) {
-                    var p = rolled[idx]
-                    if (p > pool[idx]) {
-                        aceCount++
-                    }
-                    if (p > self.result) {
-                        self.result = p
-                    }
-                }
+                self.result = Math.max.apply(null, rolled)
                 self.detail = rolled
-                // emoticon
-                if (aceCount === self.detail.length) {
-                    self.emoticon = 'laugh'
-                } else if (self.result === 1) {
-                    self.emoticon = 'cry'
-                } else {
-                    self.emoticon = false
-                }
                 self.update()
             })
         }
