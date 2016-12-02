@@ -37,8 +37,8 @@
             </div>
         </div>
         <div class="pure-g detail-result">
-            <div class="pure-u-1-{ detail.length }" each="{oneDie in detail}">
-                <label>{oneDie}</label>
+            <div class="pure-u-1-{ detail.length }" each="{detail}">
+                <label>{value}</label>
             </div>
         </div>
     </form>
@@ -70,32 +70,37 @@
             self.detail = []
             self.result = 0
             var aceCount = 0
-            // standard dices
+            // preparing dice pool : standard dices
+            var pool = []
             for(var k = 0; k < self.model.number; k++) {
-                var roll = dicePoolService.unlimitRoll(self.model.face)
-                self.detail.push(roll)
-                if (roll > self.model.face) {
-                    aceCount++
-                }
+                pool.push({side: self.model.face})
             }
             // joker die
             if (self.model.joker !== 'x') {
-                var roll = dicePoolService.unlimitRoll(self.model.joker)
-                self.detail.push(roll)
-                if (roll > self.model.joker) {
-                    aceCount++
+                pool.push({side: self.model.joker})
+            }
+            // make roll
+            dicePoolService.rollPool(pool).then(function(pool){
+                for(var idx in pool) {
+                    var p = pool[idx]
+                    if (p.ace) {
+                        aceCount++
+                    }
+                    if (p.value > self.result) {
+                        self.result = p.value
+                    }
                 }
-            }
-            // result
-            self.result = Math.max.apply(null, self.detail)
-            // emoticon
-            if (aceCount === self.detail.length) {
-                self.emoticon = 'laugh'
-            } else if (self.result === 1) {
-                self.emoticon = 'cry'
-            } else {
-                self.emoticon = false
-            }
+                self.detail = pool
+                // emoticon
+                if (aceCount === self.detail.length) {
+                    self.emoticon = 'laugh'
+                } else if (self.result === 1) {
+                    self.emoticon = 'cry'
+                } else {
+                    self.emoticon = false
+                }
+                self.update()
+            })
         }
 
     </script>
