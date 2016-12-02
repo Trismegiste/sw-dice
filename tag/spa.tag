@@ -23,20 +23,25 @@
                 </label>
             </div>
         </div>
-        <div class="pure-g">
-            <div class="pure-u-1-1 validate">
-                <button class="pure-button button-primary pure-input-1">Roll</button>
-            </div>
-        </div>
-        <div class="pure-g result">
+        <div class="pure-g {hidden: !waiting}">
             <div class="pure-u-1-1">
-                <label if="{result > 1}">{result}</label>
-                <label if="{result == 1}"><i class="icon-emo-cry"></i></label>
+                <label><i class="icon-spinner animate-spin"></i></label>
             </div>
         </div>
-        <div class="pure-g detail-result">
-            <div class="pure-u-1-{ detail.length }" each="{rolled in detail}">
-                <label>{rolled}</label>
+        <div class="{hidden: waiting}">
+            <div class="pure-g">
+                <div class="pure-u-1-1 validate">
+                    <button class="pure-button button-primary pure-input-1">Roll</button>
+                </div>
+                <div class="pure-u-1-1">
+                    <label if="{result > 1}">{result}</label>
+                    <label if="{result == 1}"><i class="icon-emo-cry"></i></label>
+                </div>
+            </div>
+            <div class="pure-g detail-result">
+                <div class="pure-u-1-{ detail.length }" each="{rolled in detail}">
+                    <label>{rolled}</label>
+                </div>
             </div>
         </div>
     </form>
@@ -63,6 +68,7 @@
         }
 
         onRoll() {
+            self.waiting = true
             self.detail = []
             self.result = 0
             // preparing dice pool : standard dices
@@ -78,6 +84,7 @@
             dicePoolService.rollPool(pool).then(function(rolled){
                 self.result = Math.max.apply(null, rolled)
                 self.detail = rolled
+                self.waiting = false;
                 self.update()
             })
         }
