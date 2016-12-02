@@ -3,10 +3,79 @@
 var DicePool = function () {
     this.random = new Random(Random.engines.mt19937().autoSeed())
     this.container = [] // FIFO
+    this.diceCount = 4
 }
 
+DicePool.prototype.rollOne = function (side) {
+    var self = this
+
+    if (this.container.length === 0) {
+        return new Promise(function (fulfill, reject) {
+            fetch('https://www.random.org/integers/?num='
+                    + self.diceCount
+                    + '&min=1&max=120&col='
+                    + self.diceCount
+                    + '&base=10&format=plain&rnd=new').then(function (response) {
+                return response.text()
+            }).then(function (content) {
+                var extracted = content.split("\t");
+                for (var k = 0; k < self.diceCount; k++) {
+                    self.container[k] = parseInt(extracted[k]);
+                }
+
+                self.rollOne(side).then(function (r) {
+                    fulfill(r)
+                })
+            })
+        })
+    } else {
+        return new Promise(function (fulfill, reject) {
+            var r = self.container.shift()
+            fulfill(1 + r % side)
+        })
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 DicePool.prototype.roll = function (side) {
-    return  this.random.integer(1, side)
+    var self = this
+
+    if (this.container.length === 0) {
+        this.container = fetch('https://www.random.org/integers/?num='
+                + this.diceCount
+                + '&min=1&max=120&col='
+                + this.diceCount
+                + '&base=10&format=plain&rnd=new').then(function (response) {
+            return response.blob()
+        }).then(function (content) {
+            var res
+            var extracted = content.split("\t");
+            for (var k = 0; k < self.diceCount; k++) {
+                res[k] = parseInt(extracted[k]);
+            }
+
+            return res
+        })
+    }
+
+    console.log(this.container)
+
+    var r = this.container.shift()
+
+    return 1 + r % side
 }
 
 DicePool.prototype.unlimitRoll = function (side) {
@@ -23,21 +92,19 @@ DicePool.prototype.jokerRoll = function (side) {
     return Math.max(this.unlimitRoll(side), this.unlimitRoll(6))
 }
 
-DicePool.prototype.getPromise = function (param) {
-    var self = this
-    return new Promise(function (fulfill, reject) {
-        if (self.container.length > 0) {
-            var extract = self.container.shift()
-            param.roll = Math.ceil(extract * param.side / 120)
-            fulfill(param)
-        } else {
-
-        }
-    })
-}
-
 DicePool.prototype.rollPool = function (pool) {
     var self = this
+
+    if (pool.length === 0) {
+        return new Promise(function (fulfill, reject) {
+            fulfill([])
+        })
+    } else {
+        return new Promise(function (fulfill, reject) {
+
+        })
+    }
+
     return new Promise(function (fulfill, reject) {
         for (var idx in pool) {
             var r = pool[idx]
