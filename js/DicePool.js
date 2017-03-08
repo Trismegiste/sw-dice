@@ -32,9 +32,7 @@ DicePool.prototype.rollOne = function (side) {
     } else {
         return new Promise(function (fulfill, reject) {
             var r = self.container.shift()
-            setTimeout(function () {
-                fulfill(1 + r % side)
-            }, 300)
+            fulfill(1 + r % side)
         })
 
     }
