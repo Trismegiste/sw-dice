@@ -85,6 +85,14 @@
                 self.result = Math.max.apply(null, rolled)
                 self.detail = rolled
                 self.waiting = false;
+                // sound
+                if (self.result == 1) {
+                    inceptionSound.seek(0.8)
+                    inceptionSound.play();
+                } else {
+                    rollSound.play()
+                }
+                // udpate when the promise is fulfill
                 self.update()
             })
         }
