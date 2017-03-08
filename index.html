@@ -30,8 +30,11 @@
     <script src="./js/DicePool.js"></script>
     <script>
         var dicePoolService = new DicePool()
-        var sound = new Howl({
-            src: ['./asset/foghorn.m4a']
+        var inceptionSound = new Howl({
+            src: ['./asset/foghorn.webm', './asset/foghorn.ogg']
+        });
+        var rollSound = new Howl({
+            src: ['./asset/roll.webm', './asset/roll.ogg']
         });
         riot.mount('*')
     </script>

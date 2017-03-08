@@ -87,8 +87,10 @@
                 self.waiting = false;
                 // sound
                 if (self.result == 1) {
-                    sound.seek(2.8)
-                    sound.play();
+                    inceptionSound.seek(0.8)
+                    inceptionSound.play();
+                } else {
+                    rollSound.play()
                 }
                 // udpate when the promise is fulfill
                 self.update()
